@@ -1,0 +1,1 @@
+SIEMPAnnotator - Contains the code for interface that aids manual annotation of named entities in tweets.
