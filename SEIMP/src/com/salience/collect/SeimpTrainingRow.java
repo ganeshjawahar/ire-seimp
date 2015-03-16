@@ -4,35 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.salience.meij.Entity;
-
 public class SeimpTrainingRow {
 	private String text = null;
-	private List<String> imageList = null, neList = null, sneList = null;
+	private List<String> imageList = null, mergedNeList = null;
 	private long _id = -1, userId = -1;
-
 	private Date createdAt = null;
 	private int favoriteCount = 0, retweetCount = 0;
-
-	private String annotator = null, comments = null;
-
-	public String getComments() {
-		return comments;
-	}
-
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
-
-	private Date lastUpdated = null;
-
-	public long get_id() {
-		return _id;
-	}
-
-	public void set_id(long _id) {
-		this._id = _id;
-	}
+	private List<Annotation> annotationList = null;
+	private List<NERList> nerList = null;
 
 	public String getText() {
 		return text;
@@ -50,20 +29,28 @@ public class SeimpTrainingRow {
 		this.imageList = imageList;
 	}
 
-	public List<String> getNeList() {
-		return neList;
+	public List<String> getMergedNeList() {
+		return mergedNeList;
 	}
 
-	public void setNeList(List<String> neList) {
-		this.neList = neList;
+	public void setMergedNeList(List<String> mergedNeList) {
+		this.mergedNeList = mergedNeList;
 	}
 
-	public List<String> getSneList() {
-		return sneList;
+	public long get_id() {
+		return _id;
 	}
 
-	public void setSneList(List<String> sneList) {
-		this.sneList = sneList;
+	public void set_id(long _id) {
+		this._id = _id;
+	}
+
+	public long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
 	public Date getCreatedAt() {
@@ -90,28 +77,20 @@ public class SeimpTrainingRow {
 		this.retweetCount = retweetCount;
 	}
 
-	public String getAnnotator() {
-		return annotator;
+	public List<Annotation> getAnnotationList() {
+		return annotationList;
 	}
 
-	public void setAnnotator(String annotator) {
-		this.annotator = annotator;
+	public void setAnnotationList(List<Annotation> annotationList) {
+		this.annotationList = annotationList;
 	}
 
-	public Date getLastUpdated() {
-		return lastUpdated;
+	public List<NERList> getNerList() {
+		return nerList;
 	}
 
-	public void setLastUpdated(Date lastUpdated) {
-		this.lastUpdated = lastUpdated;
-	}
-
-	public long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setNerList(List<NERList> nerList) {
+		this.nerList = nerList;
 	}
 
 	public void addImage(final String img) {

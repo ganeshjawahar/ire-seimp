@@ -87,7 +87,7 @@ public class MeijTrainingSetManager {
 		}
 		reader.close();
 
-		if (AppGlobals.isDebug)
+		if (AppGlobals.IS_DEBUG)
 			System.out.println("Found " + tSet.getData().size()
 					+ " tweets to be valid from Meij Dataset.");
 
@@ -125,7 +125,7 @@ public class MeijTrainingSetManager {
 			den++;
 		}
 
-		if (AppGlobals.isDebug)
+		if (AppGlobals.IS_DEBUG)
 			System.out.println("Perf. metric for Meij dataset = (" + num + "/"
 					+ den + ") = " + (num / den));
 
