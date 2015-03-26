@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
 import com.salience.client.Service;
+import com.salience.shared.Annotation;
 import com.salience.shared.SeimpTrainingRow;
 
 /**
@@ -50,12 +52,23 @@ public class ServiceImpl extends RemoteServiceServlet implements
 	
 	public void saveSNE(final String dbName,final String collection,final SeimpTrainingRow newRow){
 		//Updates the tweet with SNE's and possible comments.
+		final BasicDBList bdbList = new BasicDBList();
+		if(newRow.getAnnotationList()!=null) {
+			for (final Annotation ann:newRow.getAnnotationList()) {
+				final BasicDBObject bdbo = new BasicDBObject();
+				bdbo.put("comments",ann.getComments());
+				bdbo.put("annotator",ann.getAnnotator());
+				bdbo.put("sneList",ann.getSneList());
+				bdbList.add(bdbo);
+			}
+		}		
+		
 		final BasicDBObject dbo=new BasicDBObject();
-		dbo.append("$set", new BasicDBObject().append("sneList",newRow.getSneList()).append("annotator",newRow.getAnnotator()).append("comments",newRow.getComments()));		
+		dbo.append("$set", new BasicDBObject().append("annotationList",bdbList));		
 		MongoDbManager.getCollection(dbName, collection).update(new BasicDBObject().append("_id",newRow.get_id()),dbo);		
 	}
 	
-	public List<String> getUnannotatedList(final String dbName,final String collection){
+	public List<String> getUnannotatedList(final String dbName,final String collection,final String user){
 		//Get un-annotated tweet ids, group them and return.
 		final List<String> unannotatedList=new ArrayList<String>();
 		final DBCollection dbc=MongoDbManager.getCollection(dbName, collection);
@@ -71,7 +84,7 @@ public class ServiceImpl extends RemoteServiceServlet implements
 				e.printStackTrace();
 			}
 			if(row!=null) {
-				if(row.getAnnotator()==null || row.getAnnotator().trim().length()==0){
+				if(isUnAnnotated(row,user)==true){
 					if(left==-1) left=curRow;
 					right=curRow;
 				} else {
@@ -83,5 +96,14 @@ public class ServiceImpl extends RemoteServiceServlet implements
 		}
 		if(left!=-1) unannotatedList.add(left+"-"+right);
 		return unannotatedList;
+	}
+	
+	private boolean isUnAnnotated(final SeimpTrainingRow row,final String user){
+		//Returns true if the row is unannotated by any user or by this user.
+		if(row.getAnnotationList()==null || row.getAnnotationList().size()==0) return true;
+		for(final Annotation ann:row.getAnnotationList())
+			if(ann.getAnnotator().equals(user))
+				return false;
+		return true;
 	}
 }

@@ -11,9 +11,9 @@ import java.util.List;
 public class AppGlobals {
 
 	public final static boolean IS_DEBUG = true;
-	public final static String HTTP_PROXY_HOST="";
+	public final static String HTTP_PROXY_HOST="proxy.iiit.ac.in";
 	public final static String HTTP_PROXY_PORT="8080";
-	public final static Proxy HTTP_PROXY=new Proxy(Proxy.Type.HTTP, new InetSocketAddress("", 8080));
+	public final static Proxy HTTP_PROXY=new Proxy(Proxy.Type.HTTP, new InetSocketAddress("proxy.iiit.ac.in", 8080));
 
 	/*
 	 * Twitter configuration parameters.
@@ -24,12 +24,13 @@ public class AppGlobals {
 	/*
 	 * Mongo DB Parameters.
 	 */
-	public final static String MONGO_DB_SERVER_IP = "";
+	public final static String MONGO_DB_SERVER_IP = "10.2.4.249";
 	public final static int MONGO_DB_PORT = 27017;
 	public final static String MONGO_DB_NAME = "seimp";
 	public final static String MEIJ_TRAINING_SET_COLLECTION_NAME = "meijtrainingset";
 	public final static String SMALL_SEIMP_TRAINING_SET_COLLECTION_NAME = "smallseimptrainingset";
 	public final static String LARGE_SEIMP_TRAINING_SET_COLLECTION_NAME = "largeseimptrainingset";
+	public final static String INTER_ANNOTATION_SET_COLLECTION_NAME="interannotationset";
 
 	/*
 	 * NER parameters
@@ -37,9 +38,9 @@ public class AppGlobals {
 	private final static String STOP_WORD_LIST_FILE = "data/ner/stopwordslist.txt";
 	public final static String ARK_TWEET_TAGGER_TRAINING_MODEL = "data/ner/arkTweetModel.20120919";
 	public static List<String> STOP_WORD_LIST = null;
-	public final static String GET_RITTER_NER_RECOGNITION_ENDPOINT = "http://:5050/extract?tweet=";
+	public final static String GET_RITTER_NER_RECOGNITION_ENDPOINT = "http://10.2.4.249:5050/extract?tweet=";
 	public final static String TWINER_WIKI_KEYPHRASENESS_FILE="data/ner/WikiQsEng.txt";
-	public final static String POST_MICROSOFT_WEB_NGRAM_ACCESS_ENDPOINT="";
+	public final static String POST_MICROSOFT_WEB_NGRAM_ACCESS_ENDPOINT="http://weblm.research.microsoft.com/rest.svc/phrase-tweets/2011/1/jp?u=";
 	public final static int TWINER_MAX_RES_SIZE=2;
 
 	public static enum NER {

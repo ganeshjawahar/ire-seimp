@@ -14,5 +14,5 @@ public interface Service extends RemoteService {
 	public Integer getTweetCount(final String dbName,final String collection);
 	public SeimpTrainingRow getTweet(final String dbName,final String collection,final int row);
 	public void saveSNE(final String dbName,final String collection,final SeimpTrainingRow newRow);
-	public List<String> getUnannotatedList(final String dbName,final String collection);
+	public List<String> getUnannotatedList(final String dbName,final String collection,final String user);
 }

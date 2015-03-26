@@ -10,10 +10,12 @@ public class ClientGlobals {
 	static{
 		COLLECTION_LIST.add("smallseimptrainingset");
 		COLLECTION_LIST.add("largeseimptrainingset");
+		COLLECTION_LIST.add("interannotationset");
 		
 		ANNOTATOR_LIST.add("ganesh");
 		ANNOTATOR_LIST.add("snehith");
 		ANNOTATOR_LIST.add("sindhura");
+		ANNOTATOR_LIST.add("priya");
 	}
 	
 }

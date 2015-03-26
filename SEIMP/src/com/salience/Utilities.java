@@ -202,12 +202,6 @@ public class Utilities {
 		reader.close();
 		secWriter.close();		
 	}
-	
-	public static void main(final String[] argv) throws Exception{
-		System.setProperty("http.proxyHost", AppGlobals.HTTP_PROXY_HOST);
-		System.setProperty("http.proxyPort", AppGlobals.HTTP_PROXY_PORT);
-		System.out.println(getNgramProbability("one_two_three"));
-	}
 
 	public static double getNgramProbability(String ngram) {
 		String response=null;
@@ -219,6 +213,14 @@ public class Utilities {
 			e.printStackTrace();
 		}		
 		return 0;
+	}
+	
+	public static boolean contains(final List<String> list,final String str){
+		//Utility to check if given 'str' is present as substring in atleast one entry in the list.
+		for(final String entry:list)
+			if(entry.toLowerCase().contains(str.toLowerCase()))
+				return true;
+		return false;
 	}
 
 }

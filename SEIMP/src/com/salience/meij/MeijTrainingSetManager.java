@@ -16,8 +16,6 @@ import com.salience.AppGlobals;
 import com.salience.MongoDbManager;
 import com.salience.TwitterManager;
 import com.salience.Utilities;
-import com.salience.ner.AlanRitter;
-import com.salience.ner.ArkTweet;
 
 public class MeijTrainingSetManager {
 
@@ -97,39 +95,35 @@ public class MeijTrainingSetManager {
 					AppGlobals.MEIJ_TRAINING_SET_COLLECTION_NAME, row);
 	}
 
-	public static double evaluate() throws ClassNotFoundException, IOException {
+	public static void evaluate() throws ClassNotFoundException, IOException {
 		// Find & Return the performance metric for the MEIJ dataset.
 		final BasicDBObject whereClause = new BasicDBObject();
 		whereClause.put("lang", "en");
 		final DBCursor cursor = MongoDbManager.getCollection(
 				AppGlobals.MONGO_DB_NAME,
 				AppGlobals.MEIJ_TRAINING_SET_COLLECTION_NAME).find(whereClause);
-		double num = 0, den = 0;
+		int tCount=0;
 		while (cursor.hasNext()) {
 			final MeijTrainingRow row = (MeijTrainingRow) Utilities
 					.convertToPOJO(cursor.next().toString(),
 							"com.salience.meij.MeijTrainingRow");
 
 			// Get the NE candidates list.
-			final List<String> candidateList = Utilities.mergeNER(row.getText(),AppGlobals.NER.ALAN_RITTER,AppGlobals.NER.ARK_TWEET);
+			final List<String> candidateList = Utilities.mergeNER(row.getText(),AppGlobals.NER.ALAN_RITTER,AppGlobals.NER.ARK_TWEET,AppGlobals.NER.STANFORD_CRF);
 			if (candidateList == null || candidateList.size() == 0)
 				continue;
 
 			int neCount = 0;
 			for (final Entity entity : row.getEntityList()) {
 				// Check if it's a NE
-				if (candidateList.indexOf(entity.getName()) != -1)
+				if (Utilities.contains(candidateList, entity.getName()))
 					++neCount;
 			}
-			num += (double) (neCount / candidateList.size());
-			den++;
+			
+			if(neCount!=0) ++tCount;
 		}
-
-		if (AppGlobals.IS_DEBUG)
-			System.out.println("Perf. metric for Meij dataset = (" + num + "/"
-					+ den + ") = " + (num / den));
-
-		return (num / den);
+		
+		System.out.println(tCount);
 	}
 
 	public final static void main(final String[] argv) throws Exception {

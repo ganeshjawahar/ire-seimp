@@ -19,6 +19,6 @@ public interface ServiceAsync {
 	void saveSNE(String dbName, String collection, SeimpTrainingRow newRow,
 			AsyncCallback<Void> callback);
 
-	void getUnannotatedList(String dbName, String collection,
+	void getUnannotatedList(String dbName, String collection, String user,
 			AsyncCallback<List<String>> callback);
 }
