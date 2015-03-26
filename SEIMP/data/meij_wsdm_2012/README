@@ -1,0 +1,3 @@
+This file contains the tweets and annotations used for the WSDM 2012 paper, Adding Semantics to Microblog Posts (by Edgar Meij, Wouter Weerkamp, and Maarten de Rijke). In the paper, we evaluate various methods for automatically identifying concepts (in the form of Wikipedia articles) that are contained in or meant by a tweet. 
+
+See http://edgar.meij.pro/dataset-adding-semantics-microblog-posts/ for more information.
